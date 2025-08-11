@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
+import { Alert, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
-type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-  GroupDetails: { groupId: string };
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-// Ecran Login
 function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] =useState('');
 
-  const onLogin = () => {
-    // aici poți adăuga validare reală
-    if(email && password){
-      navigation.replace('Home');
+  const handleLogin = () => {
+    console.log('Login pressed:', email, password);
+    if (email === 'antercode707@gmail.com' && password === '123456') {
+      setErrorMessage('');
+      navigation.navigate('Home');
     } else {
-      alert('Introdu email și parolă');
+      setErrorMessage('Invalid email or password');
     }
   };
 
   return (
     <View style={styles.container}>
+      <Image source={require('./assets/logo.png')} style={styles.logo} />
       <Text style={styles.title}>SplitMate Login</Text>
       <TextInput
         style={styles.input}
@@ -38,69 +32,61 @@ function LoginScreen({ navigation }: any) {
       />
       <TextInput
         style={styles.input}
-        placeholder="Parolă"
+        placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Login" onPress={onLogin} />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }
 
-// Ecran Home (lista grupuri)
-function HomeScreen({ navigation }: any) {
-  const groups = [
-    { id: '1', name: 'Vacanță Barcelona' },
-    { id: '2', name: 'Petrecere Crăciun' },
-  ];
-
-  const renderItem = ({ item }: any) => (
-    <TouchableOpacity onPress={() => navigation.navigate('GroupDetails', { groupId: item.id })} style={styles.groupItem}>
-      <Text>{item.name}</Text>
-    </TouchableOpacity>
-  );
-
+function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Grupuri SplitMate</Text>
-      <FlatList
-        data={groups}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
+      <Text style={styles.title}>Welcome to SplitMate!</Text>
     </View>
   );
 }
 
-// Ecran detalii grup
-function GroupDetailsScreen({ route }: any) {
-  const { groupId } = route.params;
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Detalii grup: {groupId}</Text>
-      {/* Aici poți adăuga lista de cheltuieli și membri */}
-      <Text>(Aici vom pune detalii despre cheltuieli și balanțe)</Text>
-    </View>
-  );
-}
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'SplitMate' }} />
-        <Stack.Screen name="GroupDetails" component={GroupDetailsScreen} options={{ title: 'Detalii Grup' }} />
+        <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 15, borderRadius: 5 },
-  groupItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#eee' },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#bbb',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 15,
+  },
 });
