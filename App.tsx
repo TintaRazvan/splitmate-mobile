@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] =useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
     console.log('Login pressed:', email, password);
@@ -18,7 +18,7 @@ function LoginScreen({ navigation }: any) {
     }
   };
 
-  return (
+   return (
     <View style={styles.container}>
       <Image source={require('./assets/logo.png')} style={styles.logo} />
       <Text style={styles.title}>SplitMate Login</Text>
@@ -37,6 +37,7 @@ function LoginScreen({ navigation }: any) {
         value={password}
         onChangeText={setPassword}
       />
+      {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
@@ -66,8 +67,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#172621',  // background negru inchis verzui
     padding: 20,
-    backgroundColor: '#fff',
     justifyContent: 'center',
   },
   logo: {
@@ -81,12 +82,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#D0D0D0',  // alb deschis
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#bbb',
+    backgroundColor: '#2A4038',  // verde inchis pentru inputuri
     borderRadius: 8,
     padding: 12,
     marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#3B593F',      // verde mediu border
+    color: '#D0D0D0',            // text alb deschis
+  },
+  errorText: {
+    color: '#FF6666',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#4D734C',  // verde deschis pentru buton
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#D0D0D0',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
