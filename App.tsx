@@ -67,7 +67,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#172621',  // background negru inchis verzui
+    backgroundColor: '#172621',  
     padding: 20,
     justifyContent: 'center',
   },
@@ -82,16 +82,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#D0D0D0',  // alb deschis
+    color: '#D0D0D0',  
   },
   input: {
-    backgroundColor: '#2A4038',  // verde inchis pentru inputuri
+    backgroundColor: '#2A4038',  
     borderRadius: 8,
     padding: 12,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#3B593F',      // verde mediu border
-    color: '#D0D0D0',            // text alb deschis
+    borderColor: '#3B593F',      
+    color: '#D0D0D0',            
   },
   errorText: {
     color: '#FF6666',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#4D734C',  // verde deschis pentru buton
+    backgroundColor: '#4D734C',  
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
