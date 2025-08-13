@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeTabs from './HomeTabs';
 
 function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ function LoginScreen({ navigation }: any) {
     console.log('Login pressed:', email, password);
     if (email === 'antercode707@gmail.com' && password === '123456') {
       setErrorMessage('');
-      navigation.navigate('Home');
+      navigation.navigate('HomeTabs');
     } else {
       setErrorMessage('Invalid email or password');
     }
@@ -58,7 +59,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
