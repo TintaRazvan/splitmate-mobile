@@ -43,6 +43,15 @@ function LoginScreen({ navigation }: any) {
     </View>
   );
 }
+function AddBillScreen({ navigation }: any) {
+  return (
+    <View style={{ flex: 1, backgroundColor: '#172621', justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ color: '#D0D0D0', fontSize: 20 }}>Add a Bill Here</Text>
+      <Button title="Close" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
 
 function HomeScreen() {
   return (
@@ -54,6 +63,11 @@ function HomeScreen() {
 
 const Stack = createNativeStackNavigator();
 
+<Stack.Screen
+  name="AddBill"
+  component={AddBillScreen}
+  options={{ presentation: 'modal', headerShown: false }}
+/>
 export default function App() {
   return (
     <NavigationContainer>
