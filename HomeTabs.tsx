@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -84,7 +84,7 @@ export default function HomeTabs() {
           />
         </Tab.Navigator>
 
-       
+        {/* Buton + centrat peste tab bar */}
         <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => setModalVisible(true)}
@@ -94,37 +94,62 @@ export default function HomeTabs() {
         </TouchableOpacity>
       </View>
 
-      
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+      {/* Modal minimalist */}
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.text}>Choose an action</Text>
-            <Button
-              title="Add Bill"
-              onPress={() => {
-                setModalVisible(false);
-                alert('Bill added!');
-              }}
-            />
-            <Button
-              title="Open Camera"
-              onPress={async () => {
-                setModalVisible(false);
-                if (!permission || !permission.granted) {
-                  await requestPermission();
-                }
-                setCameraVisible(true);
-              }}
-            />
-            <Button title="Close" color="red" onPress={() => setModalVisible(false)} />
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>Choose an action</Text>
+
+            <View style={styles.actionRow}>
+              {/* Add Bill */}
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  setModalVisible(false);
+                  alert('Bill added!');
+                }}
+              >
+                <Icon name="receipt" size={30} color="#fff" />
+                <Text style={styles.actionText}>Add Bill</Text>
+              </TouchableOpacity>
+
+              {/* Open Camera */}
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={async () => {
+                  setModalVisible(false);
+                  if (!permission || !permission.granted) {
+                    await requestPermission();
+                  }
+                  setCameraVisible(true);
+                }}
+              >
+                <Icon name="camera" size={30} color="#fff" />
+                <Text style={styles.actionText}>Open Camera</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Close */}
+            <TouchableOpacity style={styles.closeBtn} onPress={() => setModalVisible(false)}>
+              <Icon name="close" size={24} color="#fff" />
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-     
+      {/* Camera */}
       <Modal visible={cameraVisible} animationType="slide">
         <CameraView style={{ flex: 1 }} facing="back" />
-        <Button title="Close Camera" onPress={() => setCameraVisible(false)} />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#4D734C',
+            padding: 15,
+            alignItems: 'center',
+          }}
+          onPress={() => setCameraVisible(false)}
+        >
+          <Text style={{ color: '#fff', fontSize: 16 }}>Close Camera</Text>
+        </TouchableOpacity>
       </Modal>
     </>
   );
@@ -133,11 +158,12 @@ export default function HomeTabs() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#172621', justifyContent: 'center', alignItems: 'center' },
   text: { color: '#D0D0D0', fontSize: 20 },
+
   floatingButton: {
     position: 'absolute',
-    bottom: 35, 
+    bottom: 35, // peste tab bar
     left: '50%',
-    marginLeft: -30, 
+    marginLeft: -30, // jumătate din lățimea butonului
     width: 60,
     height: 60,
     backgroundColor: '#4D734C',
@@ -150,6 +176,49 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
-  modalContent: { backgroundColor: '#2A4038', padding: 20, borderRadius: 10, width: 300, alignItems: 'center' },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalCard: {
+    backgroundColor: '#2A4038',
+    borderRadius: 15,
+    padding: 20,
+    width: 300,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    color: '#D0D0D0',
+    marginBottom: 20,
+    fontWeight: '600',
+  },
+  actionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 15,
+  },
+  actionButton: {
+    backgroundColor: '#4D734C',
+    borderRadius: 10,
+    padding: 15,
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  actionText: {
+    color: '#fff',
+    marginTop: 8,
+    fontSize: 14,
+  },
+  closeBtn: {
+    backgroundColor: '#3A564D',
+    borderRadius: 20,
+    padding: 8,
+    marginTop: 10,
+  },
 });
